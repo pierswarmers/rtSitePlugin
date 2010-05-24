@@ -68,47 +68,50 @@ function gn_site_page_map($gn_site_page = null, $render_full = false, $options =
 
   $level = $options['limit_lower'];
 
-  foreach($tree as $node)
+  if($tree)
   {
-    if(!$render_full && !is_null($gn_site_page))
+    foreach($tree as $node)
     {
-      if(($node['level'] < $options['limit_lower'] || $node['level'] > $options['limit_upper']))
+      if(!$render_full && !is_null($gn_site_page))
       {
-        // know your limits
-        continue;
+        if(($node['level'] < $options['limit_lower'] || $node['level'] > $options['limit_upper']))
+        {
+          // know your limits
+          continue;
+        }
+
+        if($node['level'] > $gn_site_page['level'] + 1)
+        {
+          // allow for one level in from parent
+          continue;
+        }
+
+        $level_scope[$level]['lft'] = 1;
+        $level_scope[$level]['rgt'] = 1;
       }
 
-      if($node['level'] > $gn_site_page['level'] + 1)
+      if($level < $node['level'])
       {
-        // allow for one level in from parent
-        continue;
+        $string .=  "\n" . '<ul>' . "\n";
+      }
+      elseif($level > $node['level'])
+      {
+        $string .= '</li>' . "\n";
+
+        for($i=$level; $i>$node['level'];$i--)
+        {
+          $string .= '</ul></li>';
+        }
+      }
+      else
+      {
+        $string .= '</li>' . "\n";
       }
 
-      $level_scope[$level]['lft'] = 1;
-      $level_scope[$level]['rgt'] = 1;
-    }
-    
-    if($level < $node['level'])
-    {
-      $string .=  "\n" . '<ul>' . "\n";
-    }
-    elseif($level > $node['level'])
-    {
-      $string .= '</li>' . "\n";
+      $string .= gn_site_page_map_li($node, $gn_site_page, array('closing_tag' => ''));;
 
-      for($i=$level; $i>$node['level'];$i--)
-      {
-        $string .= '</ul></li>';
-      }
+      $level = $node['level'];
     }
-    else
-    {
-      $string .= '</li>' . "\n";
-    }
-
-    $string .= gn_site_page_map_li($node, $gn_site_page, array('closing_tag' => ''));;
-
-    $level = $node['level'];
   }
 
   if($level !== 1)
