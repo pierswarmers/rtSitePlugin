@@ -1,0 +1,6 @@
+<?php if(!sfConfig::get('app_gn_site_is_private', false)): ?>
+
+show:
+  enabled:     true
+
+<?php endif; ?>
