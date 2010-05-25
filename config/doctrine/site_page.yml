@@ -1,7 +1,7 @@
 gnSitePage:
   actAs:
-#    I18n:
-#      fields: [title, menu_title content, description]
+    gnSearchTemplate:
+      fields:      [menu_title, title, content, description]
     NestedSet:
       hasManyRoots: true
       rootColumnName: root_id
