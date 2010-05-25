@@ -28,6 +28,13 @@ class BasegnSitePageActions extends sfActions
     gnTemplateToolkit::setFrontendTemplateDir();
   }
 
+  public function executeIndex(sfWebRequest $request)
+  {
+    $this->gn_site_page = Doctrine::getTable('gnSitePage')->findRoot();
+    $this->forward404Unless($this->gn_site_page);
+    $this->setTemplate('show');
+  }
+
   public function executeShow(sfWebRequest $request)
   {
     $this->gn_site_page = $this->getRoute()->getObject();

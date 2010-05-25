@@ -34,5 +34,10 @@ class gnSitePluginConfiguration extends sfPluginConfiguration
           array('model' => 'gnSitePage', 'type' => 'object')
       )
     );
+
+    $routing->prependRoute(
+      'gn_site_page_index',
+      new sfRoute('/site',array('module' => 'gnSitePage', 'action' => 'index'))
+    );
   }
 }

@@ -63,7 +63,6 @@ function gn_site_page_map($gn_site_page = null, $render_full = false, $options =
   }
   else
   {
-    //
     $query = Doctrine::getTable('gnSitePage')->getQuery();
     $query->andWhere('page.display_in_menu = 1');
     $query->andWhere('page.level = 1');
@@ -173,14 +172,25 @@ function gn_site_page_map_li($page, $selected_page = null, $options = array())
     $title = $page['menu_title'];
   }
 
-  if(!$page instanceof gnSitePage)
+  $link = '';
+
+  if($page['level'] == 0)
   {
-    // Clean arrays of extra values
-    $tmp_page = array();
-    $tmp_page['id'] = $page['id'];
-    $tmp_page['slug'] = $page['slug'];
-    $page = $tmp_page;
+    $link = link_to($title, 'gn_site_page_index');
+  }
+  else
+  {
+    if(!$page instanceof gnSitePage)
+    {
+      // Clean arrays of extra values
+      $tmp_page = array();
+      $tmp_page['id'] = $page['id'];
+      $tmp_page['slug'] = $page['slug'];
+      $page = $tmp_page;
+    }
+
+    $link = link_to($title, 'gn_site_page_show', $page);
   }
   
-  return sprintf('<li%s>%s', $class, link_to($title, 'gn_site_page_show', $page));
+  return sprintf('<li%s>%s', $class, $link);
 }
