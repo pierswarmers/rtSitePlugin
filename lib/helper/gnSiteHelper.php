@@ -63,7 +63,11 @@ function gn_site_page_map($gn_site_page = null, $render_full = false, $options =
   }
   else
   {
-    $tree = $root_page->getNode()->getChildren();
+    //
+    $query = Doctrine::getTable('gnSitePage')->getQuery();
+    $query->andWhere('page.display_in_menu = 1');
+    $query->andWhere('page.level = 1');
+    $tree = Doctrine::getTable('gnSitePage')->getDescendantsOfRoot($root_page, $query, true);;
   }
 
   $level = $options['limit_lower'];
@@ -72,6 +76,11 @@ function gn_site_page_map($gn_site_page = null, $render_full = false, $options =
   {
     foreach($tree as $node)
     {
+      if(!$node['display_in_menu'])
+      {
+        continue;
+      }
+
       if(!$render_full && !is_null($gn_site_page))
       {
         if(($node['level'] < $options['limit_lower'] || $node['level'] > $options['limit_upper']))
@@ -158,6 +167,11 @@ function gn_site_page_map_li($page, $selected_page = null, $options = array())
   }
 
   $title = $page['title'];
+  
+  if(!is_null($page['menu_title']) && trim($page['menu_title']) !== '')
+  {
+    $title = $page['menu_title'];
+  }
 
   if(!$page instanceof gnSitePage)
   {
