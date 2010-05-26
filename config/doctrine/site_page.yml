@@ -1,6 +1,6 @@
-gnSitePage:
+rtSitePage:
   actAs:
-    gnSearchTemplate:
+    rtSearchTemplate:
       fields:      [menu_title, title, content, description]
     NestedSet:
       hasManyRoots: true
@@ -11,4 +11,4 @@ gnSitePage:
     display_in_menu: { type: boolean, default: 1 }
   inheritance:
     type:            concrete
-    extends:         gnPage
+    extends:         rtPage
