@@ -62,7 +62,6 @@ class gnSitePageAdminActions extends sfActions
     $this->form = new gnSitePageForm($gn_site_page);
 
     $this->processForm($request, $this->form);
-    $this->clearCache($gn_site_page);
     $this->setTemplate('edit');
   }
 
@@ -118,6 +117,7 @@ class gnSitePageAdminActions extends sfActions
     if ($form->isValid())
     {
       $gn_site_page = $form->save();
+      $this->clearCache($gn_site_page);
       $this->redirect('gnSitePageAdmin/index');
     }
   }
@@ -132,14 +132,26 @@ class gnSitePageAdminActions extends sfActions
     $this->redirect('gnSitePageAdmin/edit?id='.$this->gn_site_page->getId());
   }
 
-  private function clearCache($gn_site_page)
+  private function clearCache($gn_site_page = null)
   {
     $cache = $this->getContext()->getViewCacheManager();
     if ($cache)
     {
-      $cache->remove('gnSitePage/index?sf_format=*');
-      $cache->remove(sprintf('gnSitePage/show?id=%s&slug=%s', $gn_site_page->getId(), $gn_site_page->getSlug()));
-      $cache->remove('@sf_cache_partial?module=gnSitePage&action=_site_page&sf_cache_key='.$gn_site_page->getId());
+      $cache->remove('gnSitePage/index');
+
+      $file_cache = new sfFileCache(
+      array( 'cache_dir' => sfConfig::get('sf_cache_dir') . DIRECTORY_SEPARATOR . 'frontend' ) );
+      $file_cache->removePattern('**/gnSitePage/_navigation/*');
+
+      $cache->remove('@sf_cache_partial?module=gnSitePage&action=_navigation&sf_cache_key=*');
+      $cache->remove('@sf_cache_partial?module=gnSitePage&action=_navigation&sf_cache_key=40cd750bba9870f18aada2478b24840a');
+      $cache->remove('gnSitePage/_navigation?module=gnSitePage&action=*&sf_cache_key=*');
+      
+      if(!is_null($gn_site_page))
+      {
+        $cache->remove(sprintf('gnSitePage/show?id=%s&slug=%s', $gn_site_page->getId(), $gn_site_page->getSlug())); // show page
+        $cache->remove('@sf_cache_partial?module=gnSitePage&action=_blog_page&sf_cache_key='.$gn_site_page->getId()); // show page partial.
+      }
     }
   }
 }

@@ -19,6 +19,24 @@ class BasegnSitePageComponents extends sfComponents
 {
   public function executeNavigation(sfWebRequest $request)
   {
+    $module = $request->getParameter('module');
+    $action = $request->getParameter('action');
+
+    if($module === 'gnSitePage' && ($action === 'show' || $action === 'index'))
+    {
+      if($action === 'index')
+      {
+        $gn_site_page = Doctrine::getTable('gnSitePage')->findRoot();
+      }
+      else
+      {
+        $gn_site_page = Doctrine::getTable('gnSitePage')->findOnePublishedById($request->getParameter('id'));
+      }
+      if($gn_site_page)
+      {
+        $this->gn_site_page = $gn_site_page;
+      }
+    }
   }
 }
 
