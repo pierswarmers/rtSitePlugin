@@ -41,6 +41,11 @@ class BasegnSitePageActions extends sfActions
     
     $this->forward404Unless($this->gn_site_page);
 
+    if($this->gn_site_page->getNode()->isRoot())
+    {
+      $this->redirect('gn_site_page_index');
+    }
+
     if(!$this->gn_site_page->isPublished() && !$this->isAdmin())
     {
       $this->forward404('Page isn\'t published.');
