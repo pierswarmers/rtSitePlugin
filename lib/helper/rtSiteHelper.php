@@ -64,9 +64,14 @@ function rt_site_page_map($rt_site_page = null, $options = array())
   }
   else
   {
+    if(!$options['render_full'])
+    {
+      $options['limit_upper'] =1;
+    }
+
     $query = Doctrine::getTable('rtSitePage')->getQuery();
     $query->andWhere('page.display_in_menu = 1');
-    $query->andWhere('page.level = 1');
+    $query->andWhere('page.level <= ?', $options['limit_upper']);
     $tree = Doctrine::getTable('rtSitePage')->getDescendantsOfRoot($root_page, $query, true);;
   }
 
