@@ -5,8 +5,9 @@
  * @param string $web_property_id
  * @return string
  */
-function rt_site_page_map($rt_site_page = null, $render_full = false, $options = array())
+function rt_site_page_map($rt_site_page = null, $options = array())
 {
+  $otions['render_full'] = isset($options['render_full']) ? $options['render_full'] : false;
   $options['include_root'] = isset($options['include_root']) ? $options['include_root'] : true;
   $options['limit_lower'] = isset($options['limit_lower']) ? $options['limit_lower'] : 1;
   $options['limit_upper'] = isset($options['limit_upper']) ? $options['limit_upper'] : 100;
@@ -27,7 +28,7 @@ function rt_site_page_map($rt_site_page = null, $render_full = false, $options =
 
   $tree = Doctrine::getTable('rtSitePage')->getDescendantsOfRoot($root_page, null, true);
 
-  if(!$render_full && !is_null($rt_site_page))
+  if(!$otions['render_full'] && !is_null($rt_site_page))
   {
     $ancestors = $rt_site_page->getNode()->getAncestors();
 
