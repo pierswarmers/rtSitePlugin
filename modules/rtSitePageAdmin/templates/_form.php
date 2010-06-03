@@ -121,21 +121,6 @@
   </div>
 
   <div class="rt-admin-toggle-panel">
-    <h2><?php echo __('Comments') ?></h2>
-    <table class="rt-admin-toggle-panel-content">
-      <tbody>
-        <tr>
-          <th><?php echo $form['comment_status']->renderLabel() ?></th>
-          <td>
-            <?php echo $form['comment_status']->renderError() ?>
-            <?php echo $form['comment_status'] ?>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="rt-admin-toggle-panel">
     <h2><?php echo __('Location and Referencing') ?></h2>
     <table class="rt-admin-toggle-panel-content">
       <tbody>
