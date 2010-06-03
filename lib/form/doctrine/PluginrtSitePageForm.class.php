@@ -13,6 +13,6 @@ abstract class PluginrtSitePageForm extends BasertSitePageForm
   public function setup()
   {
     parent::setup();
-    unset($this['level'], $this['lft'], $this['rgt'], $this['root_id']);
+    unset($this['level'], $this['comment_status'], $this['lft'], $this['rgt'], $this['root_id']);
   }
 }
