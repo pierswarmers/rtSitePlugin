@@ -3,7 +3,7 @@
 <h1><?php echo __('Listing Versions') ?></h1>
 
 
-<form id="rtSitePageForm" action="<?php echo url_for('rtSitePageAdmin/compare?id='.$rt_site_page->getId()) ?>">
+<form id="rtAdminForm" action="<?php echo url_for('rtSitePageAdmin/compare?id='.$rt_site_page->getId()) ?>">
   <table class="stretch">
     <thead>
       <tr>
@@ -33,9 +33,7 @@
   </table>
 </form>
 
-<?php slot('rt-side') ?>
-<p>
-  <button type="submit" class="button positive" onclick="$('#rtSitePageForm').submit()"><?php echo __('Compare selection') ?></button>
-  <?php echo button_to(__('Cancel'),'rtSitePageAdmin/index', array('class' => 'button cancel')) ?>
-</p>
+<?php slot('rt-tools') ?>
+<?php include_partial('rtAdmin/standard_modal_tools', array('show_route_handle' => 'rt_site_page_show', 'object' => $rt_site_page))?>
 <?php end_slot(); ?>
+

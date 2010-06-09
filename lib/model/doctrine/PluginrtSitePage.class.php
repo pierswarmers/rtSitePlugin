@@ -12,5 +12,8 @@
  */
 abstract class PluginrtSitePage extends BasertSitePage
 {
-
+  public function getTypeNice()
+  {
+    return 'Site Page';
+  }
 }

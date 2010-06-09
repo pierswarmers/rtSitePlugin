@@ -90,7 +90,7 @@ class rtSitePageAdminActions extends sfActions
     if(!$request->hasParameter('version1') || !$request->hasParameter('version2'))
     {
       $this->getUser()->setFlash('error', 'Please select two versions to compare.', false);
-      $this->redirect('rtSitePage/versions?id='.$this->rt_site_page->getId());
+      $this->redirect('rtSitePageAdmin/versions?id='.$this->rt_site_page->getId());
     }
 
     $this->version_1 = $request->getParameter('version1');
@@ -128,6 +128,17 @@ class rtSitePageAdminActions extends sfActions
     {
       $rt_site_page = $form->save();
       $this->clearCache($rt_site_page);
+
+      $action = $request->getParameter('rt_post_save_action', 'index');
+
+      if($action == 'edit')
+      {
+        $this->redirect('rtSitePageAdmin/edit?id='.$rt_site_page->getId());
+      }elseif($action == 'show')
+      {
+        $this->redirect('rt_site_page_show',$rt_site_page);
+      }
+
       $this->redirect('rtSitePageAdmin/index');
     }
   }

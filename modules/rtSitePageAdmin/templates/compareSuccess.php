@@ -33,8 +33,6 @@
   </tbody>
 </table>
 
-<?php slot('rt-side') ?>
-<p>
-  <?php echo button_to(__('Cancel'),'rtSitePageAdmin/versions?id='.$rt_site_page->getId(), array('class' => 'button cancel')) ?>
-</p>
+<?php slot('rt-tools') ?>
+<?php include_partial('rtAdmin/standard_modal_tools', array('show_route_handle' => 'rt_site_page_show', 'object' => $rt_site_page))?>
 <?php end_slot(); ?>
