@@ -1,7 +1,7 @@
 rtSitePage:
   actAs:
     rtSearchTemplate:
-      fields:      [menu_title, title, content, description]
+      fields:      [menu_title, title, content, description, tags_as_string]
     NestedSet:
       hasManyRoots: true
       rootColumnName: root_id
