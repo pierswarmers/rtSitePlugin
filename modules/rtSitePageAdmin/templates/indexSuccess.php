@@ -3,7 +3,7 @@
 <h1><?php echo __('Listing Site Pages') ?></h1>
 
 <?php slot('rt-tools') ?>
-<?php include_partial('rtAdmin/standard_modal_tools', array('object' => new rtSitePage(), 'mode' => 'create'))?>
+<?php include_partial('rtAdmin/standard_modal_tools', array('object' => new rtSitePage()))?>
 <?php end_slot(); ?>
 
 <table>
