@@ -2,6 +2,7 @@
         
 <h1><?php echo __('Listing Versions') ?></h1>
 
+<?php include_partial('rtAdmin/flashes') ?>
 
 <form id="rtAdminForm" action="<?php echo url_for('rtSitePageAdmin/compare?id='.$rt_site_page->getId()) ?>">
   <table class="stretch">

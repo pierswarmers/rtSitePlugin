@@ -152,6 +152,7 @@ class rtSitePageAdminActions extends sfActions
 
       $this->redirect('rtSitePageAdmin/index');
     }
+    $this->getUser()->setFlash('default_error', true, false);
   }
 
   private function clearCache($rt_site_page = null)
