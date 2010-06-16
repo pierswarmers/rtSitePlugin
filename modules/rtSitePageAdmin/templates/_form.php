@@ -2,7 +2,7 @@
 <?php use_javascripts_for_form($form) ?>
 
 <?php slot('rt-tools') ?>
-<?php include_partial('rtAdmin/standard_modal_tools', array('show_route_handle' => 'rt_site_page_show', 'object' => $form->getObject()))?>
+<?php include_partial('rtAdmin/standard_modal_tools', array('show_route_handle' => 'admin', 'object' => $form->getObject()))?>
 <?php end_slot(); ?>
 
 <?php slot('rt-side') ?>

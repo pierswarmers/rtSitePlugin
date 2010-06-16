@@ -28,7 +28,7 @@ class rtSitePluginConfiguration extends sfPluginConfiguration
     $routing->prependRoute(
       'rt_site_page_show',
       new sfDoctrineRoute(
-        '/site/:slug/:id',
+        '/site/:id/:slug',
           array('module' => 'rtSitePage', 'action' => 'show'),
           array('id' => '\d+', 'sf_method' => array('get')),
           array('model' => 'rtSitePage', 'type' => 'object')

@@ -35,6 +35,11 @@ class BasertSitePageActions extends sfActions
     $this->setTemplate('show');
   }
 
+  public function executeShowHandler(sfWebRequest $request)
+  {
+    rtSiteToolkit::siteRedirect($this->getGnSitePage($request));
+  }
+
   public function executeShow(sfWebRequest $request)
   {
     $this->rt_site_page = $this->getRoute()->getObject();

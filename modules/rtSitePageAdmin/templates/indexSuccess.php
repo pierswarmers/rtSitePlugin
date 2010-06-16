@@ -25,7 +25,7 @@
       <td><?php echo $rt_site_page->getCreatedAt() ?></td>
       <td>
         <ul class="rt-admin-tools">
-          <li><?php echo rt_button_show(url_for('rt_site_page_show', $rt_site_page)) ?></li>
+          <li><?php echo rt_button_show(url_for('rtSitePageAdmin/show?id='.$rt_site_page->getId())) ?></li>
           <li><?php echo rt_button_edit(url_for('rtSitePageAdmin/edit?id='.$rt_site_page->getId())) ?></li>
           <li><?php echo rt_button_delete(url_for('rtSitePageAdmin/delete?id='.$rt_site_page->getId())) ?></li>
           <?php if($rt_site_page->getNode()->isRoot()): ?>

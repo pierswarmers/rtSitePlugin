@@ -12,7 +12,13 @@ class rtSitePageAdminActions extends sfActions
 {
   private $_rt_site_page;
 
-  public function getGnSitePage(sfWebRequest $request)
+  /**
+   * Get the page from the route.
+   * 
+   * @param sfWebRequest $request
+   * @return rtSitePage
+   */
+  public function getrtSitePage(sfWebRequest $request)
   {
     $this->forward404Unless($rt_site_page = Doctrine::getTable('rtSitePage')->find(array($request->getParameter('id'))), sprintf('Object rt_site_page does not exist (%s).', $request->getParameter('id')));
     return $rt_site_page;
@@ -25,9 +31,14 @@ class rtSitePageAdminActions extends sfActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $query = Doctrine::getTable('rtSitePage')->addSiteQuery();
+    $query = Doctrine::getTable('rtSitePage')->getQuery();
     $query->orderBy('page.root_id ASC, page.lft ASC');
     $this->rt_site_pages = $query->execute();
+  }
+
+  public function executeShow(sfWebRequest $request)
+  {
+    rtSiteToolkit::siteRedirect($this->getrtSitePage($request));
   }
 
   public function executeTree(sfWebRequest $request)
@@ -51,14 +62,14 @@ class rtSitePageAdminActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $rt_site_page = $this->getGnSitePage($request);
+    $rt_site_page = $this->getrtSitePage($request);
     $this->form = new rtSitePageForm($rt_site_page);
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-    $rt_site_page = $this->getGnSitePage($request);
+    $rt_site_page = $this->getrtSitePage($request);
     $this->form = new rtSitePageForm($rt_site_page);
 
     $this->processForm($request, $this->form);
@@ -69,7 +80,7 @@ class rtSitePageAdminActions extends sfActions
   {
     $request->checkCSRFProtection();
 
-    $rt_site_page = $this->getGnSitePage($request);
+    $rt_site_page = $this->getrtSitePage($request);
     $this->clearCache($rt_site_page);
     $rt_site_page->getNode()->delete();
 
@@ -78,13 +89,13 @@ class rtSitePageAdminActions extends sfActions
   
   public function executeVersions(sfWebRequest $request)
   {
-    $this->rt_site_page = $this->getGnSitePage($request);
+    $this->rt_site_page = $this->getrtSitePage($request);
     $this->rt_site_page_versions = Doctrine::getTable('rtSitePageVersion')->findById($this->rt_site_page->getId());
   }
 
   public function executeCompare(sfWebRequest $request)
   {
-    $this->rt_site_page = $this->getGnSitePage($request);
+    $this->rt_site_page = $this->getrtSitePage($request);
     $this->current_version = $this->rt_site_page->version;
 
     if(!$request->hasParameter('version1') || !$request->hasParameter('version2'))
@@ -113,7 +124,7 @@ class rtSitePageAdminActions extends sfActions
 
   public function executeRevert(sfWebRequest $request)
   {
-    $this->rt_site_page = $this->getGnSitePage($request);
+    $this->rt_site_page = $this->getrtSitePage($request);
     $this->rt_site_page->revert($request->getParameter('revert_to'));
     $this->rt_site_page->save();
     $this->getUser()->setFlash('notice', 'Reverted to version ' . $request->getParameter('revert_to'), false);
@@ -136,7 +147,7 @@ class rtSitePageAdminActions extends sfActions
         $this->redirect('rtSitePageAdmin/edit?id='.$rt_site_page->getId());
       }elseif($action == 'show')
       {
-        $this->redirect('rt_site_page_show',$rt_site_page);
+        tSiteToolkit::siteRedirect($rt_site_page);
       }
 
       $this->redirect('rtSitePageAdmin/index');
