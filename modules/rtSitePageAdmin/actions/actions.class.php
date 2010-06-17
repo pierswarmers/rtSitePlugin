@@ -147,7 +147,7 @@ class rtSitePageAdminActions extends sfActions
         $this->redirect('rtSitePageAdmin/edit?id='.$rt_site_page->getId());
       }elseif($action == 'show')
       {
-        tSiteToolkit::siteRedirect($rt_site_page);
+        rtSiteToolkit::siteRedirect($rt_site_page);
       }
 
       $this->redirect('rtSitePageAdmin/index');
