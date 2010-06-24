@@ -46,6 +46,8 @@ class BasertSitePageActions extends sfActions
     
     $this->forward404Unless($this->rt_site_page);
 
+    $this->handleLinks($this->rt_site_page);
+
     if($this->rt_site_page->getNode()->isRoot())
     {
       $this->redirect('rt_site_page_index');
@@ -67,5 +69,15 @@ class BasertSitePageActions extends sfActions
   private function isAdmin()
   {
     return $this->getUser()->hasCredential(sfConfig::get('app_rt_site_admin_credential', 'admin_site'));
+  }
+
+  private function handleLinks(rtSitePage $rt_site_page)
+  {
+    $pattern = sprintf(sfValidatorUrl::REGEX_URL_FORMAT, implode('|', array('http', 'https', 'ftp', 'ftps')));
+    $text = trim($rt_site_page->getContent());
+    if(preg_match($pattern, $text) > 0 || substr($text,0,1) == '/')
+    {
+      $this->redirect($text);
+    }
   }
 }
