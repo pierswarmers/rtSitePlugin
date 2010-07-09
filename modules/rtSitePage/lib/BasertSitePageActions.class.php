@@ -32,6 +32,7 @@ class BasertSitePageActions extends sfActions
   {
     $this->rt_site_page = Doctrine::getTable('rtSitePage')->findRoot();
     $this->forward404Unless($this->rt_site_page);
+    $this->updateResponse($this->rt_site_page);
     $this->setTemplate('show');
   }
 
@@ -45,6 +46,8 @@ class BasertSitePageActions extends sfActions
     $this->rt_site_page = $this->getRoute()->getObject();
     
     $this->forward404Unless($this->rt_site_page);
+
+    rtSiteToolkit::checkSiteReference($this->rt_site_page);
 
     $this->handleLinks($this->rt_site_page);
 
