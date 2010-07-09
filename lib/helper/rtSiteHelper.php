@@ -137,7 +137,16 @@ function rt_site_page_map($rt_site_page = null, $options = array())
     }
   }
 
-  return '<ul class="rt-site-page-navigation">' . $string . '</li></ul>';
+  $string = '<ul class="rt-site-page-navigation">' . $string . '</li></ul>';
+
+  $string = str_replace('<ul class="rt-site-page-navigation"></li>', '<ul class="rt-site-page-navigation">', $string);
+
+  if(trim(strip_tags($string)) == '')
+  {
+    return '';
+  }
+
+  return $string;
 }
 
 /**
