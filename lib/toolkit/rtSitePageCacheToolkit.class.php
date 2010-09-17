@@ -23,6 +23,8 @@ class rtSitePageCacheToolkit
     
     if ($cache)
     {
+      rtGlobalCacheToolkit::clearCache();
+      
       $cache->remove('rtSitePage/index');
 
       $file_cache = new sfFileCache(
