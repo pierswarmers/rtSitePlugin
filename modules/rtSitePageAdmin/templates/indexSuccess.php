@@ -8,6 +8,12 @@
 
 <?php include_partial('rtAdmin/flashes') ?>
 
+<script type="text/javascript">
+  $(function() {
+    enablePublishToggle('<?php echo url_for('rtSitePageAdmin/toggle') ?>');
+  });
+</script>
+
 <table>
   <thead>
     <tr>
@@ -22,7 +28,10 @@
     <?php foreach ($rt_site_pages as $rt_site_page): ?>
     <tr class="rt-admin-tree rt-admin-tree-level-<?php echo $rt_site_page->level ?>">
       <td class="rt-admin-title"><a href="<?php echo url_for('rtSitePageAdmin/edit?id='.$rt_site_page->getId()) ?>"><?php echo $rt_site_page->getTitle() ?></a></td>
-      <td><?php echo rt_nice_boolean($rt_site_page->getPublished()) ?></td>
+      <td class="rt-admin-publish-toggle">
+        <?php echo rt_nice_boolean($rt_site_page->getPublished()) ?>
+        <div style="display:none;"><?php echo $rt_site_page->getId() ?></div>
+      </td>
       <td><?php echo link_to_if($rt_site_page->version > 1, $rt_site_page->version, 'rtSitePageAdmin/versions?id='.$rt_site_page->getId()) ?></td>
       <td><?php echo $rt_site_page->getCreatedAt() ?></td>
       <td>

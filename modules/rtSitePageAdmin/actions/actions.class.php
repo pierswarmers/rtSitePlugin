@@ -131,7 +131,22 @@ class rtSitePageAdminActions extends sfActions
     $this->clearCache($this->rt_site_page);
     $this->redirect('rtSitePageAdmin/edit?id='.$this->rt_site_page->getId());
   }
-  
+
+  public function executeToggle(sfWebRequest $request)
+  {
+    $rt_site_page = Doctrine_Core::getTable('rtSitePage')->find(array($request->getParameter('id')));
+    if(!$rt_site_page)
+    {
+      $this->status = 'error';
+      return sfView::SUCCESS;
+    }
+
+    $rt_site_page->setPublished(!$rt_site_page->getPublished());
+    $this->status = $rt_site_page->getPublished() ? 'activated' : 'deactivated';
+    $rt_site_page->save();
+    $this->clearCache($rt_site_page);
+  }
+
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
