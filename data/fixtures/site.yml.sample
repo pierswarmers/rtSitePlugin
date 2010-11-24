@@ -1,0 +1,22 @@
+rtSitePage:
+  rtSitePage_1:
+    title: Home
+    content: Hello...
+    description: ''
+    profile: null
+    published: true
+    published_from: '2010-11-24 13:07:00'
+    published_to: null
+    comment_status: open
+    comment_count: '0'
+    searchable: true
+    menu_title: ''
+    display_in_menu: true
+    slug: home
+    created_at: '2010-11-24 13:07:50'
+    updated_at: '2010-11-24 13:08:54'
+    version: '3'
+    root_id: '1'
+    lft: '1'
+    rgt: '2'
+    level: '0'
