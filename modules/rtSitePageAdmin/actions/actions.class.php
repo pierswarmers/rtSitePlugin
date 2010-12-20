@@ -34,6 +34,27 @@ class rtSitePageAdminActions extends sfActions
     $query = Doctrine::getTable('rtSitePage')->getQuery();
     $query->orderBy('page.root_id ASC, page.lft ASC');
     $this->rt_site_pages = $query->execute();
+
+    $this->stats = $this->stats();
+  }
+
+  private function stats()
+  {
+    // Dates
+    $date_now         = date("Y-m-d H:i:s");
+
+    // SQL queries
+    $con = Doctrine_Manager::getInstance()->getCurrentConnection();
+
+    $result_site_pages_total               = $con->fetchAssoc("select count(id) as count from rt_site_page");
+    $result_site_pages_total_published     = $con->fetchAssoc("select count(id) as count from rt_site_page where published = 1 and (published_from <= '".$date_now."' OR published_from IS NULL) and (published_to > '".$date_now."' OR published_to IS NULL)");
+
+    // Create array
+    $stats = array();
+    $stats['total']            = $result_site_pages_total[0] != '' ? $result_site_pages_total[0] : 0;
+    $stats['total_published']  = $result_site_pages_total_published[0] != '' ? $result_site_pages_total_published[0] : 0;
+
+    return $stats;
   }
 
   public function executeShow(sfWebRequest $request)
