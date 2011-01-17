@@ -38,7 +38,7 @@ class rtSitePageCacheToolkit
       if(!is_null($rt_site_page))
       {
         $cache->remove(sprintf('rtSitePage/show?id=%s&slug=%s', $rt_site_page->getId(), $rt_site_page->getSlug())); // show page
-        $cache->remove('@sf_cache_partial?module=rtSitePage&action=_blog_page&sf_cache_key='.$rt_site_page->getId()); // show page partial.
+        $cache->remove('@sf_cache_partial?module=rtSitePage&action=_site_page&sf_cache_key='.$rt_site_page->getId()); // show page partial.
       }
     }
   }
