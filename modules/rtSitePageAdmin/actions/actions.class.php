@@ -34,14 +34,13 @@ class rtSitePageAdminActions extends sfActions
     $query = Doctrine::getTable('rtSitePage')->getQuery();
     $query->orderBy('page.root_id ASC, page.lft ASC');
     $this->rt_site_pages = $query->execute();
-
     $this->stats = $this->stats();
   }
 
   private function stats()
   {
     // Dates
-    $date_now         = date("Y-m-d H:i:s");
+    $date_now = date("Y-m-d H:i:s");
 
     // SQL queries
     $con = Doctrine_Manager::getInstance()->getCurrentConnection();
@@ -92,7 +91,6 @@ class rtSitePageAdminActions extends sfActions
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $rt_site_page = $this->getrtSitePage($request);
     $this->form = new rtSitePageForm($rt_site_page);
-
     $this->processForm($request, $this->form);
     $this->setTemplate('edit');
   }
@@ -100,11 +98,10 @@ class rtSitePageAdminActions extends sfActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
-
     $rt_site_page = $this->getrtSitePage($request);
     $this->clearCache($rt_site_page);
+    $this->getDispatcher($request)->notify(new sfEvent($this, 'doctrine.admin.delete_object', array('object' => $rt_site_page)));
     $rt_site_page->getNode()->delete();
-
     $this->redirect('rtSitePageAdmin/index');
   }
   
@@ -176,6 +173,8 @@ class rtSitePageAdminActions extends sfActions
       $rt_site_page = $form->save();
       $this->clearCache($rt_site_page);
 
+      $this->getDispatcher($request)->notify(new sfEvent($this, 'doctrine.admin.save_object', array('object' => $rt_site_page)));
+
       $action = $request->getParameter('rt_post_save_action', 'index');
 
       if($action == 'edit')
@@ -191,8 +190,21 @@ class rtSitePageAdminActions extends sfActions
     $this->getUser()->setFlash('default_error', true, false);
   }
 
+  /**
+   * Clean the cache relating to rtSitePage
+   *
+   * @param rtSitePage $rt_site_page
+   */
   private function clearCache($rt_site_page = null)
   {
     rtSitePageCacheToolkit::clearCache($rt_site_page);
+  }
+
+  /**
+   * @return sfEventDispatcher
+   */
+  protected function getDispatcher(sfWebRequest $request)
+  {
+    return ProjectConfiguration::getActive()->getEventDispatcher(array('request' => $request));
   }
 }
