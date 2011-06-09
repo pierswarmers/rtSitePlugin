@@ -80,6 +80,11 @@ class BasertSitePageActions extends sfActions
     $text = trim($rt_site_page->getContent());
     if(preg_match($pattern, $text) > 0 || substr($text,0,1) == '/')
     {
+      if($text === '/')
+      {
+        $this->redirect('@homepage');
+      }
+      
       $this->redirect($text);
     }
   }
