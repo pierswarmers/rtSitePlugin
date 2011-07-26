@@ -27,7 +27,7 @@ $tree = Doctrine::getTable('rtSitePage')->getDescendantsOfRoot($root_page, $quer
 <form action="/" method="post">
   <select class="rt-site-page-navigation-dropdown">
     
-    <option value="/">--Navigate site --</option>
+    <option value="-">--Navigate site --</option>
     
     <?php if($options['include_root']): ?>
       <?php 
@@ -54,7 +54,7 @@ $tree = Doctrine::getTable('rtSitePage')->getDescendantsOfRoot($root_page, $quer
   $(function() {
     
     $(".rt-site-page-navigation-dropdown").change(function() {
-      if($(this).val() != '/')
+      if($(this).val() != '-')
       {
         window.location.href = $(this).val();
       }
