@@ -17,7 +17,39 @@
  */
 class BasertSitePageComponents extends sfComponents
 {
+  /**
+   * Return site navigation as unordered list
+   * 
+   * @param sfWebRequest $request
+   */
   public function executeNavigation(sfWebRequest $request)
+  {
+    $module = $request->getParameter('module');
+    $action = $request->getParameter('action');
+
+    if($module === 'rtSitePage' && ($action === 'show' || $action === 'index'))
+    {
+      if($action === 'index')
+      {
+        $rt_site_page = Doctrine::getTable('rtSitePage')->findRoot();
+      }
+      else
+      {
+        $rt_site_page = Doctrine::getTable('rtSitePage')->findOnePublishedById($request->getParameter('id'));
+      }
+      if($rt_site_page)
+      {
+        $this->rt_site_page = $rt_site_page;
+      }
+    }
+  }
+  
+  /**
+   * Return site navigation as dropdown list
+   * 
+   * @param sfWebRequest $request
+   */  
+  public function executeNavigationDropdown(sfWebRequest $request)
   {
     $module = $request->getParameter('module');
     $action = $request->getParameter('action');
