@@ -51,6 +51,7 @@ $tree = Doctrine::getTable('rtSitePage')->getDescendantsOfRoot($root_page, $quer
       
     </optgroup>
 
+<?php if($sf_context->getInstance()->getRouting()->hasRouteName('rt_shop_order_cart')): ?>
 <?php
 
 
@@ -92,7 +93,7 @@ $tree = Doctrine::getTable('rtShopCategory')->getDescendantsOfRoot($root_page, $
       <?php endforeach; ?>
     <?php endif; ?>
     </optgroup>
-    
+    <?php endif;?>
   </select>
 </form>
 
