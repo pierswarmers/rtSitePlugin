@@ -51,7 +51,7 @@ $tree = Doctrine::getTable('rtSitePage')->getDescendantsOfRoot($root_page, $quer
       
     </optgroup>
 
-<?php if($sf_context->getInstance()->getRouting()->hasRouteName('rt_shop_order_cart')): ?>
+<?php if(is_callable($sf_context->getInstance()) && $sf_context->getInstance()->getRouting()->hasRouteName('rt_shop_order_cart')): ?>
 <?php
 
 
