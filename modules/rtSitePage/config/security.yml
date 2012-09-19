@@ -14,3 +14,7 @@ all:
   credentials: <?php echo $cred ?>
   <?php endif; ?>
 <?php endif; ?>
+
+create:
+  is_secure: true
+  credentials: admin_site
