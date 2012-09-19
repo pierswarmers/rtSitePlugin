@@ -25,15 +25,32 @@ class rtSitePluginConfiguration extends sfPluginConfiguration
   {
     $routing = $event->getSubject();
 
-    $routing->prependRoute(
-      'rt_site_page_show',
-      new sfDoctrineRoute(
-        '/site/:id/:slug',
-          array('module' => 'rtSitePage', 'action' => 'show'),
-          array('id' => '\d+', 'sf_method' => array('get')),
-          array('model' => 'rtSitePage', 'type' => 'object')
-      )
-    );
+    if(sfConfig::get('app_rt_site_page_simple_routes', true)) {
+
+        $routing->prependRoute(
+            'rt_site_page_show',
+            new sfDoctrineRoute(
+                '/s/:slug',
+                array('module' => 'rtSitePage', 'action' => 'show'),
+                array('sf_method' => array('get')),
+                array('model' => 'rtSitePage', 'type' => 'object')
+            )
+        );
+
+    } else {
+
+        $routing->prependRoute(
+            'rt_site_page_show',
+            new sfDoctrineRoute(
+                '/site/:id/:slug',
+                array('module' => 'rtSitePage', 'action' => 'show'),
+                array('id' => '\d+', 'sf_method' => array('get')),
+                array('model' => 'rtSitePage', 'type' => 'object')
+            )
+        );
+
+    }
+
 
     $routing->prependRoute(
       'rt_site_page_index',
