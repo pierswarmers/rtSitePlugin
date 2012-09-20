@@ -1,16 +1,18 @@
 <?php if(sfConfig::get('app_rt_site_is_private', false)): ?>
 
-_site_page:
-  enabled:     true
+
 
 <?php else: ?>
 
 index:
   enabled:     true
 show:
-  enabled:     true
+  enabled:     false
 _navigation:
   enabled:     true
   contextual:  true
+
+_site_page:
+  enabled:     true
 
 <?php endif; ?>
