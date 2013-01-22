@@ -54,7 +54,7 @@ class rtSitePluginConfiguration extends sfPluginConfiguration
 
     $routing->prependRoute(
       'rt_site_page_index',
-      new sfRoute('/',array('module' => 'rtSitePage', 'action' => 'index'))
+      new sfRoute('/site',array('module' => 'rtSitePage', 'action' => 'index'))
     );
   }
 }

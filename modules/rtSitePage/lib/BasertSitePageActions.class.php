@@ -86,7 +86,7 @@ class BasertSitePageActions extends sfActions
         $this->handleLinks($this->rt_site_page);
 
         if ($this->rt_site_page->getNode()->isRoot()) {
-            $this->redirect('rt_site_page_index', 301);
+            $this->redirect('/', 301);
         }
 
         if (!$this->rt_site_page->isPublished() && !$this->isAdmin()) {
