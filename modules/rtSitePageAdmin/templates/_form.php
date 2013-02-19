@@ -71,6 +71,13 @@
     <table class="rt-admin-toggle-panel-content">
       <tbody>
         <tr>
+          <th><?php echo $form['title_head']->renderLabel() ?></th>
+          <td>
+            <?php echo $form['title_head']->renderError() ?>
+            <?php echo $form['title_head'] ?>
+          </td>
+        </tr>
+        <tr>
           <th><?php echo $form['description']->renderLabel() ?></th>
           <td>
             <?php echo $form['description']->renderError() ?>
