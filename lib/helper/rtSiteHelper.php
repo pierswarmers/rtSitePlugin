@@ -155,7 +155,7 @@ function rt_site_page_map($rt_site_page = null, $options = array())
 function rt_site_page_map_li($page, $selected_page = null, $options = array())
 {
     $options['closing_tag'] = isset($options['closing_tag']) ? $options['closing_tag'] : '</li>';
-    $options['class_here'] = isset($options['class_here']) ? $options['class_here'] : 'here';
+    $options['class_here'] = isset($options['class_here']) ? $options['class_here'] : 'active';
     $options['class_in_path'] = isset($options['class_in_path']) ? $options['class_in_path'] : 'in-path';
 
     $is_in_path = false;
@@ -202,10 +202,21 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
             $tmp_page = array();
             $tmp_page['id'] = $page['id'];
             $tmp_page['slug'] = $page['slug'];
+            $tmp_page['content'] = $page['content'];
             $page = $tmp_page;
         }
 
         $link = link_to($title, 'rt_site_page_show', array('slug' => $page['slug']));
+
+        if('link:' === substr($page['content'], 0, 5)) {
+            $link = sprintf('<a href="%s">%s</a>', trim(substr($page['content'], 5)), $title);
+
+            echo rtViewToolkit::getInstance()->getUri();
+
+            if(trim(substr($page['content'], 5)) === rtViewToolkit::getInstance()->getUri()) {
+                $class = sprintf(' class="%s"', $options['class_here']);
+            }
+        }
     }
 
     return sprintf('<li%s>%s', $class, $link);
