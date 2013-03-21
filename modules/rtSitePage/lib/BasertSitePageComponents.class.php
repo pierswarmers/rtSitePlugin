@@ -35,7 +35,7 @@ class BasertSitePageComponents extends sfComponents
       }
       else
       {
-        $rt_site_page = Doctrine::getTable('rtSitePage')->findOnePublishedById($request->getParameter('id'));
+        $rt_site_page = Doctrine::getTable('rtSitePage')->findOnePublishedBySlug($request->getParameter('slug'));
       }
       if($rt_site_page)
       {

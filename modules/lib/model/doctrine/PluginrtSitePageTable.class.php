@@ -31,6 +31,19 @@ class PluginrtSitePageTable extends rtPageTable
     return $query->fetchOne();
   }
 
+  /**
+   * Return a published page by a given ID.
+   *
+   * @param Doctrine_Query $query
+   * @return Doctrine_Collection
+   */
+  public function findOnePublishedBySlug($id, Doctrine_Query $query = null)
+  {
+    $query = $this->addSiteQuery($query);
+    $query = $this->addPublishedQuery($query);
+    return $this->findOneBySlug($id);
+  }
+
   public function getDescendantsOfRoot($root_rt_site_page, Doctrine_Query $query = null, $as_array = false)
   {
     $query = $this->getQuery($query);

@@ -192,7 +192,7 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
 
   if($page['level'] == 0)
   {
-    $link = link_to($title, 'rt_site_page_index');
+    $link = link_to($title, 'homepage');
   }
   else
   {
@@ -205,7 +205,7 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
       $page = $tmp_page;
     }
 
-    $link = link_to($title, 'rt_site_page_show', $page);
+    $link = link_to($title, 'rt_site_page_show', array('slug' => $page['slug']));
   }
   
   return sprintf('<li%s>%s', $class, $link);
