@@ -188,11 +188,11 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
         $title = $page['menu_title'];
     }
 
-    $link = '';
+    $path = '';
 
     if($page['level'] == 0)
     {
-        $link = link_to($title, 'homepage');
+        $path = url_for('homepage');
     }
     else
     {
@@ -206,18 +206,21 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
             $page = $tmp_page;
         }
 
-        $link = link_to($title, 'rt_site_page_show', array('slug' => $page['slug']));
+        $path = url_for('rt_site_page_show', array('slug' => $page['slug']));
 
         if('link:' === substr($page['content'], 0, 5)) {
-            $link = sprintf('<a href="%s">%s</a>', trim(substr($page['content'], 5)), $title);
 
-            echo rtViewToolkit::getInstance()->getUri();
+            $path = trim(substr($page['content'], 5));
 
-            if(trim(substr($page['content'], 5)) === rtViewToolkit::getInstance()->getUri()) {
-                $class = sprintf(' class="%s"', $options['class_here']);
-            }
         }
     }
 
-    return sprintf('<li%s>%s', $class, $link);
+//    echo '[ "' . $path . '" - "' .rtViewToolkit::getInstance()->getUri() . '" ] <br>';
+
+    if($path == rtViewToolkit::getInstance()->getUri()) {
+        $class = sprintf(' class="%s"', $options['class_here']);
+    }
+
+
+    return sprintf('<li%s><a href="%s">%s</a>', $class, $path, $title);
 }

@@ -34,6 +34,13 @@
           <?php echo $form['content'] ?>
         </td>
       </tr>
+      <tr>
+          <th><?php echo $form['mode']->renderLabel() ?></th>
+          <td>
+              <?php echo $form['mode']->renderError() ?>
+              <?php echo $form['mode'] ?>
+          </td>
+      </tr>
     </tbody>
   </table>
 
