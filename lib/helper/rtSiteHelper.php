@@ -23,7 +23,7 @@ function rt_site_page_map($rt_site_page = null, $options = array())
 
     if($options['include_root'])
     {
-        $string .= rt_site_page_map_li($root_page, $rt_site_page, array('closing_tag' => ''));
+        $string .= rt_site_page_map_li($root_page, $rt_site_page, array('closing_tag' => '', 'render_full' => $options['render_full']));
     }
 
     $tree = Doctrine::getTable('rtSitePage')->getDescendantsOfRoot($root_page, null, true);
@@ -107,7 +107,7 @@ function rt_site_page_map($rt_site_page = null, $options = array())
 
             if($level < $node['level'])
             {
-                $string .=  "\n" . '<ul>' . "\n";
+                $string .=  "\n" . '<ul class="dropdown">' . "\n";
             }
             elseif($level > $node['level'])
             {
@@ -123,7 +123,7 @@ function rt_site_page_map($rt_site_page = null, $options = array())
                 $string .= '</li>' . "\n";
             }
 
-            $string .= rt_site_page_map_li($node, $rt_site_page, array('closing_tag' => ''));;
+            $string .= rt_site_page_map_li($node, $rt_site_page, array('closing_tag' => '', 'render_full' => $options['render_full']));;
 
             $level = $node['level'];
         }
@@ -203,6 +203,9 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
             $tmp_page['id'] = $page['id'];
             $tmp_page['slug'] = $page['slug'];
             $tmp_page['content'] = $page['content'];
+            $tmp_page['lft'] = $page['lft'];
+            $tmp_page['rgt'] = $page['rgt'];
+            $tmp_page['level'] = $page['level'];
             $page = $tmp_page;
         }
 
@@ -217,8 +220,18 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
 
 //    echo '[ "' . $path . '" - "' .rtViewToolkit::getInstance()->getUri() . '" ] <br>';
 
+    $class = '';
+
+    if($page['rgt'] - $page['lft'] > 1 && $page['level'] != 0) {
+        $class .= ' has-dropdown';
+    }
+
     if($path == rtViewToolkit::getInstance()->getUri()) {
-        $class = sprintf(' class="%s"', $options['class_here']);
+        $class .= ' ' . 'active';
+    }
+
+    if('' !== trim($class)) {
+      $class= sprintf(' class="%s"', $class);
     }
 
 
