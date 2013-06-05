@@ -23,7 +23,7 @@ class rtSitePluginConfiguration extends sfPluginConfiguration
         if(sfConfig::get('app_rt_site_page_simple_routes', true)) {
             // Note the appendRoute(). It is very important that this is the only lean "/blah" route that is
             // set by append. Consider the collision implications for non-page routes like "/contact".
-            $routing->prependRoute(
+            $routing->appendRoute(
                 'rt_site_page_show',
                 new sfDoctrineRoute(
                     '/:slug',
