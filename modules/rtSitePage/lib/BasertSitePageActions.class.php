@@ -93,6 +93,12 @@ class BasertSitePageActions extends sfActions
             $this->forward404('Page isn\'t published.');
         }
 
+        if('link:' === substr($this->rt_site_page['content'], 0, 5)) {
+
+            $this->redirect(trim(substr($this->rt_site_page['content'], 5)));
+
+        }
+
         $this->updateResponse($this->rt_site_page);
     }
 
