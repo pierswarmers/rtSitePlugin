@@ -15,7 +15,7 @@
  * @subpackage modules
  * @author     Piers Warmers <piers@wranglers.com.au>
  */
-class BasertSitePageActions extends sfActions
+class BasertSitePageActions extends rtController
 {
     /**
      * Executes an application defined process prior to execution of this sfAction object.
