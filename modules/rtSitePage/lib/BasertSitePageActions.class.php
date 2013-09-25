@@ -24,6 +24,7 @@ class BasertSitePageActions extends rtController
      */
     public function preExecute()
     {
+        parent::preExecute();
         sfConfig::set('app_rt_node_title', 'Site');
         rtTemplateToolkit::setFrontendTemplateDir();
     }
