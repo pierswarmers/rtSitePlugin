@@ -165,7 +165,7 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
     {
         $is_current = $page['id'] == $selected_page['id'];
 
-        if($selected_page['lft'] > $page['lft'] && $selected_page['rgt'] < $page['rgt'])
+        if($selected_page['lft'] > $page['lft'] && $selected_page['rgt'] < $page['rgt'] && $page['level'] != 0)
         {
             $is_in_path = true;
         }
@@ -175,10 +175,10 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
 
     if($is_current)
     {
-        $class = sprintf(' class="%s"', $options['class_here']);
+        $class = $options['class_here'];
     }elseif($is_in_path)
     {
-        $class = sprintf(' class="%s"', $options['class_in_path']);
+        $class = $options['class_in_path'];
     }
 
     $title = $page['title'];
@@ -220,7 +220,7 @@ function rt_site_page_map_li($page, $selected_page = null, $options = array())
 
 //    echo '[ "' . $path . '" - "' .rtViewToolkit::getInstance()->getUri() . '" ] <br>';
 
-    $class = '';
+//    $class = '';
 
     if($page['rgt'] - $page['lft'] > 1 && $page['level'] != 0) {
         $class .= ' has-dropdown';
