@@ -15,7 +15,7 @@
  * @subpackage modules
  * @author     Piers Warmers <piers@wranglers.com.au>
  */
-class BasertSitePageActions extends sfActions
+class BasertSitePageActions extends rtController
 {
     /**
      * Executes an application defined process prior to execution of this sfAction object.
@@ -24,6 +24,7 @@ class BasertSitePageActions extends sfActions
      */
     public function preExecute()
     {
+        parent::preExecute();
         sfConfig::set('app_rt_node_title', 'Site');
         rtTemplateToolkit::setFrontendTemplateDir();
     }
